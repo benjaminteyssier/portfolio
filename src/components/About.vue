@@ -1,0 +1,110 @@
+<template>
+  <v-network-graph :nodes=nodes :edges=edges :configs=configs :layouts=layouts>
+    <template #edge-label="{ edge, ...slotProps }">
+      <v-edge-label :text="edge.label" align="center" vertical-align="above" v-bind="slotProps" />
+    </template>
+  </v-network-graph>
+</template>
+<script lang="ts">
+  import { defineComponent,reactive } from 'vue'
+  import * as vNG from 'v-network-graph'
+  import "v-network-graph/lib/style.css"
+  export default defineComponent({
+    data() {
+        return {
+          nodes : {
+            spineNode1: { name: "2000" },
+            spineNode2: { name: "" },
+            spineNode3: { name: "" },
+            spineNode4: { name: "" },
+            spineNode5: { name: "" },
+            spineNode6: { name: "" },
+            spineNode7: { name: "" },
+            spineNode8: { name: "" },
+            assoNode1: { name: "Moniteur VTT",margin:0 },
+            assoNode2: { name: "Vice-Président BDS \nMines Saint-Etienne" },
+            assoNode3: { name: "Chargé de projet MEP\n Junior Entreprise" },
+            etuNode1: { name: "Bac S\n Mention TB" },
+            etuNode2: { name: "CPGE\n MPSI/MP*" },
+            etuNode3: { name: "Mines Saint-Etienne" },
+            etuNode4: { name: "Concordia University" },
+            intNode1: { name: "" },
+            intNode2: { name: "Sciences" },
+            intNode3: { name: "Géopolitique" },
+            intNode4: { name: "Montagne" },
+            sportNode1: { name: "Cyclisme" },
+            sportNode2: { name: "Athlétisme" },
+            sportNode3: { name: "Basketball" },
+            sportNode4: { name: "Triathlon" },
+            
+          },
+          edges : {
+            spineEdge1: { source: "spineNode1", target: "spineNode2" },
+            spineEdge2: { source: "spineNode2", target: "spineNode3" },
+            spineEdge3: { source: "spineNode3", target: "spineNode4" },
+            spineEdge4: { source: "spineNode4", target: "spineNode5" },
+            spineEdge5: { source: "spineNode5", target: "spineNode6" },
+            spineEdge6: { source: "spineNode6", target: "spineNode7" },
+            spineEdge7: { source: "spineNode7", target: "spineNode8" },
+            spineAssoEdge: { source: "spineNode3", target: "assoNode1", label: "Engagement Associatif" },
+            assoEdge1: { source: "assoNode1", target: "assoNode2"},
+            assoEdge2: { source: "assoNode2", target: "assoNode3"},
+            spineEtuEdge: { source: "spineNode4", target: "etuNode1", label: "Etudes" },
+            etuEdge1: { source: "etuNode1", target: "etuNode2"},
+            etuEdge2: { source: "etuNode2", target: "etuNode3"},
+            etuEdge3: { source: "etuNode3", target: "etuNode4"},
+            spineIntEdge: { source: "spineNode2", target: "intNode1", label: "Interêts"},
+            intEdge1: { source: "intNode1", target: "intNode2"},
+            intEdge2: { source: "intNode2", target: "intNode3"},
+            intEdge3: { source: "intNode3", target: "intNode4"},
+            intSportEdge: { source: "intNode1", target: "sportNode1", label: "Sports"},
+            sportEdge1: { source: "sportNode1", target: "sportNode2"},
+            sportEdge2: { source: "sportNode2", target: "sportNode3"},
+            sportEdge3: { source: "sportNode3", target: "sportNode4"},
+          },
+          configs : reactive(
+            vNG.defineConfigs({
+              view: {
+                panEnabled: false,
+                zoomEnabled: false,
+              },
+              node: {
+                draggable: true,
+                label:{
+                  margin:20
+                }
+              }
+            })
+          ),
+          layouts : {
+            nodes:{
+              spineNode1: { x:-700,y:400},
+              spineNode2: { x:-500,y:400},
+              spineNode3: { x:-300,y:400},
+              spineNode4: { x:-100,y:400},
+              spineNode5: { x:100,y:400},
+              spineNode6: { x:300,y:400},
+              spineNode7: { x:500,y:400},
+              spineNode8: { x:700,y:400},
+              assoNode1: { x:-100,y:100},
+              assoNode2: { x:100,y:100},
+              assoNode3: { x:300,y:100},
+              etuNode1: { x:0,y:250},
+              etuNode2: { x:200,y:250},
+              etuNode3: { x:400,y:250},
+              etuNode4: { x:600,y:250},
+              intNode1: { x:-400,y:700},
+              intNode2: { x:-200,y:700},
+              intNode3: { x:0,y:700},
+              intNode4: { x:200,y:700},
+              sportNode1: { x:-250,y:550 },
+              sportNode2: { x:-50,y:550 },
+              sportNode3: { x:150,y:550 },
+              sportNode4: { x:350,y:550 },
+            }
+          }
+        }
+      }
+    }
+)
+</script>
