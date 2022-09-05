@@ -1,110 +1,278 @@
-<template>
-  <v-network-graph :nodes=nodes :edges=edges :configs=configs :layouts=layouts>
-    <template #edge-label="{ edge, ...slotProps }">
-      <v-edge-label :text="edge.label" align="center" vertical-align="above" v-bind="slotProps" />
-    </template>
-  </v-network-graph>
-</template>
-<script lang="ts">
-  import { defineComponent,reactive } from 'vue'
-  import * as vNG from 'v-network-graph'
-  import "v-network-graph/lib/style.css"
-  export default defineComponent({
-    data() {
-        return {
-          nodes : {
-            spineNode1: { name: "2000" },
-            spineNode2: { name: "" },
-            spineNode3: { name: "" },
-            spineNode4: { name: "" },
-            spineNode5: { name: "" },
-            spineNode6: { name: "" },
-            spineNode7: { name: "" },
-            spineNode8: { name: "" },
-            assoNode1: { name: "Moniteur VTT",margin:0 },
-            assoNode2: { name: "Vice-Président BDS \nMines Saint-Etienne" },
-            assoNode3: { name: "Chargé de projet MEP\n Junior Entreprise" },
-            etuNode1: { name: "Bac S\n Mention TB" },
-            etuNode2: { name: "CPGE\n MPSI/MP*" },
-            etuNode3: { name: "Mines Saint-Etienne" },
-            etuNode4: { name: "Concordia University" },
-            intNode1: { name: "" },
-            intNode2: { name: "Sciences" },
-            intNode3: { name: "Géopolitique" },
-            intNode4: { name: "Montagne" },
-            sportNode1: { name: "Cyclisme" },
-            sportNode2: { name: "Athlétisme" },
-            sportNode3: { name: "Basketball" },
-            sportNode4: { name: "Triathlon" },
-            
+<script setup lang="ts">
+import { reactive } from 'vue'
+import * as vNG from 'v-network-graph'
+import data from "./data"
+import "v-network-graph/lib/style.css"
+
+
+const configs = reactive(
+  vNG.defineConfigs({
+    node: {
+      selectable: true,
+      draggable: false,
+      normal: {
+        type: "circle",
+        radius: 16,
+        // for type is "rect" -->
+        width: 32,
+        height: 32,
+        borderRadius: 4,
+        // <-- for type is "rect"
+        strokeWidth: 5,
+        strokeColor: "#000000",
+        strokeDasharray: "0",
+        color: "#ffffff",
+      },
+      hover: {
+        type: "circle",
+        radius: 16,
+        // for type is "rect" -->
+        width: 32,
+        height: 32,
+        borderRadius: 4,
+        // <-- for type is "rect"
+        strokeWidth: 0,
+        strokeColor: "#000000",
+        strokeDasharray: "0",
+        color: "#000000",
+      },
+      selected: {
+        type: "circle",
+        radius: 16,
+        // for type is "rect" -->
+        width: 32,
+        height: 32,
+        borderRadius: 4,
+        // <-- for type is "rect"
+        strokeWidth: 0,
+        strokeColor: "#000000",
+        strokeDasharray: "0",
+        color: "#000000",
+      },
+      label: {
+        visible: true,
+        fontFamily: undefined,
+        fontSize: 20,
+        lineHeight: 1.1,
+        color: "#000000",
+        margin: 4,
+        direction: "south",
+        background: {
+          visible: false,
+          color: "#ffffff",
+          padding: {
+            vertical: 1,
+            horizontal: 4,
           },
-          edges : {
-            spineEdge1: { source: "spineNode1", target: "spineNode2" },
-            spineEdge2: { source: "spineNode2", target: "spineNode3" },
-            spineEdge3: { source: "spineNode3", target: "spineNode4" },
-            spineEdge4: { source: "spineNode4", target: "spineNode5" },
-            spineEdge5: { source: "spineNode5", target: "spineNode6" },
-            spineEdge6: { source: "spineNode6", target: "spineNode7" },
-            spineEdge7: { source: "spineNode7", target: "spineNode8" },
-            spineAssoEdge: { source: "spineNode3", target: "assoNode1", label: "Engagement Associatif" },
-            assoEdge1: { source: "assoNode1", target: "assoNode2"},
-            assoEdge2: { source: "assoNode2", target: "assoNode3"},
-            spineEtuEdge: { source: "spineNode4", target: "etuNode1", label: "Etudes" },
-            etuEdge1: { source: "etuNode1", target: "etuNode2"},
-            etuEdge2: { source: "etuNode2", target: "etuNode3"},
-            etuEdge3: { source: "etuNode3", target: "etuNode4"},
-            spineIntEdge: { source: "spineNode2", target: "intNode1", label: "Interêts"},
-            intEdge1: { source: "intNode1", target: "intNode2"},
-            intEdge2: { source: "intNode2", target: "intNode3"},
-            intEdge3: { source: "intNode3", target: "intNode4"},
-            intSportEdge: { source: "intNode1", target: "sportNode1", label: "Sports"},
-            sportEdge1: { source: "sportNode1", target: "sportNode2"},
-            sportEdge2: { source: "sportNode2", target: "sportNode3"},
-            sportEdge3: { source: "sportNode3", target: "sportNode4"},
-          },
-          configs : reactive(
-            vNG.defineConfigs({
-              view: {
-                panEnabled: false,
-                zoomEnabled: false,
-              },
-              node: {
-                draggable: true,
-                label:{
-                  margin:20
-                }
-              }
-            })
-          ),
-          layouts : {
-            nodes:{
-              spineNode1: { x:-700,y:400},
-              spineNode2: { x:-500,y:400},
-              spineNode3: { x:-300,y:400},
-              spineNode4: { x:-100,y:400},
-              spineNode5: { x:100,y:400},
-              spineNode6: { x:300,y:400},
-              spineNode7: { x:500,y:400},
-              spineNode8: { x:700,y:400},
-              assoNode1: { x:-100,y:100},
-              assoNode2: { x:100,y:100},
-              assoNode3: { x:300,y:100},
-              etuNode1: { x:0,y:250},
-              etuNode2: { x:200,y:250},
-              etuNode3: { x:400,y:250},
-              etuNode4: { x:600,y:250},
-              intNode1: { x:-400,y:700},
-              intNode2: { x:-200,y:700},
-              intNode3: { x:0,y:700},
-              intNode4: { x:200,y:700},
-              sportNode1: { x:-250,y:550 },
-              sportNode2: { x:-50,y:550 },
-              sportNode3: { x:150,y:550 },
-              sportNode4: { x:350,y:550 },
-            }
-          }
-        }
-      }
-    }
+          borderRadius: 2,
+        },
+      },
+      focusring: {
+        visible: true,
+        width: 4,
+        padding: 2,
+        color: "#000000",
+        dasharray: "0",
+      },
+    },
+    edge: {
+      normal: {
+        width: 3,
+        color: "#000000",
+        dasharray: "0",
+        linecap: "butt",
+        animate: false,
+        animationSpeed: 50,
+      },
+      hover: {
+        width: 4,
+        color: "#000000",
+        dasharray: "0",
+        linecap: "butt",
+        animate: false,
+        animationSpeed: 50,
+      },
+      selected: {
+        width: 3,
+        color: "#dd8800",
+        dasharray: "6",
+        linecap: "round",
+        animate: false,
+        animationSpeed: 50,
+      },
+      gap: 3,
+      type: "straight",
+      summarize: true,
+      summarized: {
+        label: {
+          fontSize: 10,
+          color: "#4466cc",
+        },
+        shape: {
+          type: "rect",
+          radius: 6, // for type is "circle"
+          width: 12,
+          height: 12,
+          borderRadius: 3,
+          color: "#ffffff",
+          strokeWidth: 1,
+          strokeColor: "#4466cc",
+          strokeDasharray: "0",
+        },
+        stroke: {
+          width: 5,
+          color: "#4466cc",
+          dasharray: "0",
+          linecap: "butt",
+          animate: false,
+          animationSpeed: 50,
+        },
+      },
+    },
+    view:{
+        panEnabled: false,
+        zoomEnabled: false,
+      },
+  })
 )
 </script>
+
+<template>
+  <div class="demo-control-panel">
+    <el-tabs type="border-card">
+      <el-tab-pane label="Node">
+        <el-tabs>
+          <el-tab-pane label="normal">
+            <demo-node-config-panel
+              v-model:type="configs.node.normal.type"
+              v-model:radius="configs.node.normal.radius"
+              v-model:width="configs.node.normal.width"
+              v-model:height="configs.node.normal.height"
+              v-model:borderRadius="configs.node.normal.borderRadius"
+              v-model:strokeWidth="configs.node.normal.strokeWidth"
+              v-model:strokeColor="configs.node.normal.strokeColor"
+              v-model:strokeDasharray="configs.node.normal.strokeDasharray"
+              v-model:color="configs.node.normal.color"
+            />
+          </el-tab-pane>
+          <el-tab-pane label="hover">
+            <demo-node-config-panel
+              v-model:type="configs.node.hover.type"
+              v-model:radius="configs.node.hover.radius"
+              v-model:width="configs.node.hover.width"
+              v-model:height="configs.node.hover.height"
+              v-model:borderRadius="configs.node.hover.borderRadius"
+              v-model:strokeWidth="configs.node.hover.strokeWidth"
+              v-model:strokeColor="configs.node.hover.strokeColor"
+              v-model:strokeDasharray="configs.node.hover.strokeDasharray"
+              v-model:color="configs.node.hover.color"
+            />
+          </el-tab-pane>
+          <el-tab-pane label="selected">
+            <demo-node-config-panel
+              v-model:type="configs.node.selected.type"
+              v-model:radius="configs.node.selected.radius"
+              v-model:width="configs.node.selected.width"
+              v-model:height="configs.node.selected.height"
+              v-model:borderRadius="configs.node.selected.borderRadius"
+              v-model:strokeWidth="configs.node.selected.strokeWidth"
+              v-model:strokeColor="configs.node.selected.strokeColor"
+              v-model:strokeDasharray="configs.node.selected.strokeDasharray"
+              v-model:color="configs.node.selected.color"
+            />
+          </el-tab-pane>
+        </el-tabs>
+      </el-tab-pane>
+      <el-tab-pane label="Label">
+        <el-tabs>
+          <el-tab-pane label="basic">
+            <demo-label-config-panel
+              v-model:visible="configs.node.label.visible"
+              v-model:fontFamily="configs.node.label.fontFamily"
+              v-model:fontSize="configs.node.label.fontSize"
+              v-model:lineHeight="configs.node.label.lineHeight"
+              v-model:color="configs.node.label.color"
+              v-model:margin="configs.node.label.margin"
+              v-model:direction="configs.node.label.direction"
+            />
+          </el-tab-pane>
+          <el-tab-pane label="background">
+            <demo-label-background-config-panel
+              v-model:visible="configs.node.label.background.visible"
+              v-model:color="configs.node.label.background.color"
+              v-model:paddingVertical="configs.node.label.background.padding.vertical"
+              v-model:paddingHorizontal="
+                configs.node.label.background.padding.horizontal
+              "
+              v-model:borderRadius="configs.node.label.background.borderRadius"
+            />
+          </el-tab-pane>
+        </el-tabs>
+      </el-tab-pane>
+      <el-tab-pane label="Focus">
+        <demo-focus-config-panel
+          v-model:visible="configs.node.focusring.visible"
+          v-model:width="configs.node.focusring.width"
+          v-model:padding="configs.node.focusring.padding"
+          v-model:color="configs.node.focusring.color"
+          v-model:dasharray="configs.node.focusring.dasharray"
+        />
+      </el-tab-pane>
+      <el-tab-pane label="Edge">
+        <el-tabs>
+          <el-tab-pane label="normal">
+            <demo-edge-config-panel
+              v-model:width="configs.edge.normal.width"
+              v-model:color="configs.edge.normal.color"
+              v-model:dasharray="configs.edge.normal.dasharray"
+              v-model:linecap="configs.edge.normal.linecap"
+              v-model:animate="configs.edge.normal.animate"
+              v-model:animationSpeed="configs.edge.normal.animationSpeed"
+            />
+          </el-tab-pane>
+        </el-tabs>
+      </el-tab-pane>
+      <el-tab-pane label="Summarized Edge">
+        <el-tabs>
+          <el-tab-pane label="stroke">
+            <demo-edge-config-panel
+              v-model:width="configs.edge.summarized.stroke.width"
+              v-model:color="configs.edge.summarized.stroke.color"
+              v-model:dasharray="configs.edge.summarized.stroke.dasharray"
+              v-model:linecap="configs.edge.summarized.stroke.linecap"
+              v-model:animate="configs.edge.summarized.stroke.animate"
+              v-model:animationSpeed="configs.edge.summarized.stroke.animationSpeed"
+            />
+          </el-tab-pane>
+          <el-tab-pane label="label">
+            <demo-summarized-edge-label-config-panel
+              v-model:labelFontSize="configs.edge.summarized.label.fontSize"
+              v-model:labelColor="configs.edge.summarized.label.color"
+              v-model:type="configs.edge.summarized.shape.type"
+              v-model:radius="configs.edge.summarized.shape.radius"
+              v-model:width="configs.edge.summarized.shape.width"
+              v-model:height="configs.edge.summarized.shape.height"
+              v-model:borderRadius="configs.edge.summarized.shape.borderRadius"
+              v-model:strokeWidth="configs.edge.summarized.shape.strokeWidth"
+              v-model:strokeColor="configs.edge.summarized.shape.strokeColor"
+              v-model:strokeDasharray="configs.edge.summarized.shape.strokeDasharray"
+              v-model:color="configs.edge.summarized.shape.color"
+            />
+          </el-tab-pane>
+        </el-tabs>
+      </el-tab-pane>
+    </el-tabs>
+  </div>
+
+  <v-network-graph
+    :nodes="data.nodes"
+    :edges="data.edges"
+    :layouts="data.layouts"
+    :configs="configs"
+  />
+</template>
+<style>
+  .v-network-graph{
+  height: 800px;
+}
+</style>
